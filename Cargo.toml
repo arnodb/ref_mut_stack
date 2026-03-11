@@ -1,0 +1,10 @@
+[package]
+name = "ref_mut_stack"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.89.0"
+license-file = "LICENSE"
+description = "Iteratively stack mutable references"
+documentation = "https://docs.rs/ref_mut_stack"
+repository = "https://github.com/arnodb/ref_mut_stack"
+readme = "README.md"
