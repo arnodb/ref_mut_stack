@@ -26,6 +26,10 @@ on:
         required: false
         type: boolean
         default: false
+      with_miri:
+        required: false
+        type: boolean
+        default: false
       pre_build_script:
         required: false
         type: string
@@ -49,6 +53,10 @@ jobs:
         with:
           toolchain: ${{ inputs.rust_toolchain }}
           components: rustfmt, clippy
+
+      - id: install-miri
+        if: ${{ inputs.with_miri }}
+        run: rustup component add miri
 
       - id: quickinstall
         name: Install cargo-quickinstall
@@ -86,6 +94,13 @@ jobs:
       - id: test
         name: Compile and run tests
         run: cargo test ${{ inputs.rust_features }} --verbose
+
+      - id: miri
+        name: Run tests with Miri
+        if: ${{ inputs.with_miri }}
+        run: |
+          cargo miri test ${{ inputs.rust_features }} --verbose
+          echo "Miri OK" >> "$GITHUB_STEP_SUMMARY"
 
       - id: doc
         name: Doc

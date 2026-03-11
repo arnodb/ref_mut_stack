@@ -28,4 +28,5 @@ jobs:
     uses: ./.github/workflows/_build.yml
     with:
       rust_toolchain: nightly
+      with_miri: true
 

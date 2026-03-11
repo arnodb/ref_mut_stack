@@ -17,6 +17,9 @@ watch_clippy:
 test *args:
     cargo test --all-features {{args}}
 
+miri:
+    cargo miri test --all-features
+
 check_all:
     just stable
     cargo clippy --all-features --all-targets -- -D warnings
@@ -30,6 +33,7 @@ check_all:
     just nightly
     cargo build --all-features
     cargo test --all-features
+    cargo miri test --all-features
 
     just stable
 
