@@ -95,6 +95,10 @@ jobs:
         name: Compile and run tests
         run: cargo test ${{ inputs.rust_features }} --verbose
 
+      - id: compile-test
+        name: Run compile tests
+        run: cd compile-tests && cargo test ${{ inputs.rust_features }} --verbose
+
       - id: miri
         name: Run tests with Miri
         if: ${{ inputs.with_miri }}

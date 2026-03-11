@@ -1,0 +1,8 @@
+[package]
+name = "ref_mut_stack_compile_test"
+version = "0.1.0"
+edition = "2021"
+
+[dev-dependencies]
+ref_mut_stack = { path = ".." }
+compiletest_rs = "0.11"

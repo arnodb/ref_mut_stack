@@ -25,15 +25,18 @@ check_all:
     cargo clippy --all-features --all-targets -- -D warnings
     cargo build --all-features
     cargo test --all-features
+    cd compile-tests && cargo test --all-features
 
     just msrv
     cargo build --all-features
     cargo test --all-features
+    cd compile-tests && cargo test --all-features
 
     just nightly
     cargo build --all-features
     cargo test --all-features
     cargo miri test --all-features
+    cd compile-tests && cargo test --all-features
 
     just stable
 
