@@ -17,6 +17,10 @@ watch_clippy:
 test *args:
     cargo test --all-features {{args}}
 
+[working-directory: 'compile-tests']
+compile-test *args:
+    cargo test --all-features {{args}}
+
 miri:
     cargo miri test --all-features
 

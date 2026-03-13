@@ -10,7 +10,7 @@ pub struct RefMutStack<'a, R, T> {
 }
 
 impl<'a, R, T> RefMutStack<'a, R, T> {
-    pub fn new(r: &mut R) -> Self {
+    pub fn new(r: &'a mut R) -> Self {
         Self {
             root_ref: NonNull::from_mut(r),
             stack: Vec::new(),
