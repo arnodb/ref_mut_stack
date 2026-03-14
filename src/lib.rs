@@ -5,7 +5,7 @@ use std::{
 
 pub struct RefMutStack<'a, R, T> {
     root_ref: NonNull<R>,
-    stack: Vec<(T, NonNull<R>)>,
+    stack: SafeDropVec<(T, NonNull<R>)>,
     _a: std::marker::PhantomData<&'a ()>,
 }
 
@@ -13,7 +13,7 @@ impl<'a, R, T> RefMutStack<'a, R, T> {
     pub fn new(r: &'a mut R) -> Self {
         Self {
             root_ref: NonNull::from_mut(r),
-            stack: Vec::new(),
+            stack: Vec::new().into(),
             _a: Default::default(),
         }
     }
@@ -24,6 +24,46 @@ impl<'a, R, T> RefMutStack<'a, R, T> {
             r,
             stack: NonNull::from_mut(self),
         }
+    }
+}
+
+/// This is a Vec which will drop its elements in reverse order on destruction.
+///
+/// It ensures soundness of error cases when the elements holding the mutable references really
+/// want to access them during their destruction. See soundness integration tests.
+///
+/// Note that is would be an anti-pattern to use the references in destructors, but this wrapper
+/// addresses incorrect implementations.
+///
+/// Also note that the borrow checker will not allow us to implement `Drop` on [`RefMutStack`]
+/// itself because of its self referencing nature. The borrow checker does not complain on the
+/// implementation but on the use site when it needs to drop the stack and realizes there are
+/// conflicting lifetime requirements.
+struct SafeDropVec<T>(Vec<T>);
+
+impl<T> From<Vec<T>> for SafeDropVec<T> {
+    fn from(value: Vec<T>) -> Self {
+        Self(value)
+    }
+}
+
+impl<T> Drop for SafeDropVec<T> {
+    fn drop(&mut self) {
+        // Drop elements in reverse order.
+        while self.0.pop().is_some() {}
+    }
+}
+
+impl<T> Deref for SafeDropVec<T> {
+    type Target = Vec<T>;
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<T> DerefMut for SafeDropVec<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
     }
 }
 

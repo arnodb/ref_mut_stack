@@ -21,8 +21,8 @@ test *args:
 compile-test *args:
     cargo test --all-features {{args}}
 
-miri:
-    cargo miri test --all-features
+miri *args:
+    cargo miri test --all-features {{args}}
 
 check_all:
     just stable

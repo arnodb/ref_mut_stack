@@ -2,7 +2,7 @@ extern crate ref_mut_stack;
 
 use ref_mut_stack::{ParkableRefMut, RefMutStack};
 
-fn main() -> () {
+fn main() {
     let mut root = ();
 
     struct Type<'a>(ParkableRefMut<'a, (), Self>);
