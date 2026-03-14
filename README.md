@@ -6,7 +6,7 @@
 
 RefMutStack allows to simulate recursion where each level holds a mutable reference to the one held by the caller with an iteration.
 
-It is made in such a way that the rules enforced by the borrow checker during the theoretical recursion are still enforced during iterations. On that purpose, each object holding a mutable reference becomes unreachable when the recursion is similated: it is stacked until it becomes usable again.
+It is made in such a way that the rules enforced by the borrow checker during the theoretical recursion are still enforced during iterations. On that purpose, each object holding a mutable reference becomes unreachable when the recursion is simulated: it is stacked until it becomes usable again.
 
 ## Soundness
 
@@ -16,7 +16,7 @@ The "`impl Drop` using the held mutable reference" case is even protected but no
 
 ## Example
 
-[owned_builder.rs](examples/owned_builder.rs) shows an example of a builder used to iteratively build a tree which should be built recursively otherwise (to leverage the true borrow checker):
+[owned_builder.rs](tests/owned_builder.rs) shows an example of a builder used to iteratively build a tree which should be built recursively otherwise (to leverage the true borrow checker):
 
 ```rust
 use ref_mut_stack::{ParkableRefMut, RefMutStack};

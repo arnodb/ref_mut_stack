@@ -12,7 +12,7 @@ use std::{
 ///
 /// It is made in such a way that the rules enforced by the borrow checker during the theoretical
 /// recursion are still enforced during iterations. On that purpose, each object holding a mutable
-/// reference becomes unreachable when the recursion is similated: it is stacked until it becomes
+/// reference becomes unreachable when the recursion is simulated: it is stacked until it becomes
 /// usable again.
 ///
 /// In order to use it:
