@@ -8,3 +8,6 @@ description = "Iteratively stack mutable references"
 documentation = "https://docs.rs/ref_mut_stack"
 repository = "https://github.com/arnodb/ref_mut_stack"
 readme = "README.md"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(coverage,coverage_nightly)'] }

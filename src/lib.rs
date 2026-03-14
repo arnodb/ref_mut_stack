@@ -1,3 +1,5 @@
+#![cfg_attr(coverage_nightly, feature(coverage_attribute))]
+
 use std::{
     ops::{Deref, DerefMut},
     ptr::NonNull,
@@ -77,6 +79,7 @@ impl<T> Drop for SafeDropVec<T> {
 
 impl<T> Deref for SafeDropVec<T> {
     type Target = Vec<T>;
+    #[cfg_attr(coverage_nightly, coverage(off))]
     fn deref(&self) -> &Self::Target {
         &self.0
     }
