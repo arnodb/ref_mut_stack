@@ -1,1 +1,3 @@
+/compile-tests/target
+Cargo.lock
 /target

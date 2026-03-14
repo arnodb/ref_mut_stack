@@ -30,6 +30,7 @@ check_all:
     cargo build --all-features
     cargo test --all-features
     cd compile-tests && cargo test --all-features
+    RUSTDOCFLAGS="-D warnings" cargo doc --all-features --no-deps
 
     just msrv
     cargo build --all-features
@@ -43,6 +44,9 @@ check_all:
     cd compile-tests && cargo test --all-features
 
     just stable
+
+doc:
+    RUSTDOCFLAGS="-D warnings" cargo doc --all-features --no-deps
 
 # Toolchain management
 
