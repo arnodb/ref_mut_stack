@@ -14,6 +14,8 @@ RefMutStack should be sound in many ways and some tests are implemented to ensur
 
 The "`impl Drop` using the held mutable reference" case is even protected but note that it would easily qualify as "abuse". Keep it simple and everything will be fine.
 
+Miri is used to double check soundness assertions (it's quite cool actually).
+
 ## Example
 
 [owned_builder.rs](tests/owned_builder.rs) shows an example of a builder used to iteratively build a tree which should be built recursively otherwise (to leverage the true borrow checker):
